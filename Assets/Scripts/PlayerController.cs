@@ -13,10 +13,14 @@ public class PlayerController : MonoBehaviour
     public Transform grdChecker;
     public float grdCheckerRad;
 
+    public float airtime;
+    public float airtimeCounter;
+
     // Start is called before the first frame update
     void Start()
     {
         theRB2D = GetComponent<Rigidbody2D>();
+        airtimeCounter = airtime;
     }
     // Update is called once per frame
     void Update()
@@ -53,6 +57,28 @@ public class PlayerController : MonoBehaviour
             {
                 theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
             }
+
+            
+        }
+
+        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        {
+            if (airtimeCounter > 0)
+            {
+                theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
+                airtimeCounter -= Time.deltaTime;
+            }
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
+        {
+            airtimeCounter = 0;
+        }
+
+        if (grounded)
+        {
+            airtimeCounter = airtime;
         }
     }
 
