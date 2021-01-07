@@ -7,13 +7,16 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     private bool canMove;
     private Rigidbody2D theRB2D;
-    public float dashForce;
+
+    public bool grounded;
+    public LayerMask whatIsGrd;
+    public Transform grdChecker;
+    public float grdCheckerRad;
 
     // Start is called before the first frame update
     void Start()
     {
         theRB2D = GetComponent<Rigidbody2D>();
-        dashForce = 100;
     }
     // Update is called once per frame
     void Update()
@@ -25,11 +28,12 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+
+        grounded = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsGrd);
         MovePlayer();
         Jump();
         Debug.Log(theRB2D.position.y);
-        Dash();
-        Teleport();
+
     }
     void MovePlayer()
     {
@@ -42,29 +46,16 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && theRB2D.position.y < -3.8)
+        if (grounded == true)
         {
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
                 theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
+            }
         }
     }
 
-    void Dash()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            theRB2D.velocity = new Vector2(dashForce, theRB2D.velocity.y);
-        }
-    }
-
-    void Teleport()
-    {
-        Vector2 tele = new Vector2(theRB2D.position.x * -1, theRB2D.velocity.y * -1);
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            theRB2D.MovePosition(tele);
-
-        }
-    }
+    
 
 }
