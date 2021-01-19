@@ -16,11 +16,14 @@ public class PlayerController : MonoBehaviour
     public float airtime;
     public float airtimeCounter;
 
+    private Animator theAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
         theRB2D = GetComponent<Rigidbody2D>();
         airtimeCounter = airtime;
+        theAnimator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
@@ -29,6 +32,12 @@ public class PlayerController : MonoBehaviour
         {
             canMove = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+        {
+            airtimeCounter = 0;
+        }
+
     }
     private void FixedUpdate()
     {
@@ -45,6 +54,13 @@ public class PlayerController : MonoBehaviour
         {
             theRB2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed,
            theRB2D.velocity.y);
+
+            theAnimator.SetFloat("Speed", Mathf.Abs(theRB2D.velocity.x));
+
+            if (theRB2D.velocity.x > 0)
+                transform.localScale = new Vector2(1f, 1f);
+            else if (theRB2D.velocity.x < 0)
+                transform.localScale = new Vector2(-1f, 1f);
         }
     }
 
@@ -76,10 +92,14 @@ public class PlayerController : MonoBehaviour
             airtimeCounter = 0;
         }
 
-        if (grounded)
+        
+
+            if (grounded)
         {
             airtimeCounter = airtime;
         }
+
+        theAnimator.SetBool("Grounded", grounded);
     }
 
     
