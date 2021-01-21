@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         grounded = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsGrd);
         MovePlayer();
         Jump();
-        Debug.Log(theRB2D.position.y);
+        
 
     }
     void MovePlayer()
@@ -102,6 +102,14 @@ public class PlayerController : MonoBehaviour
         theAnimator.SetBool("Grounded", grounded);
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if(other.gameObject.tag == "Spike")
+        {
+            Debug.Log("Ouch!");
+        }
+
+    }
 
 }
