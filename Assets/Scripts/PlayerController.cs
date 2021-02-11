@@ -28,6 +28,11 @@ public class PlayerController : MonoBehaviour
     public bool teleport;
     public LayerMask whatIsTel;
 
+    public bool ceiling;
+    public LayerMask whatIsCei;
+    public Transform ceiChecker;
+    public float ceiCheckerRad;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +68,8 @@ public class PlayerController : MonoBehaviour
         }
         
 
+
+
     }
     private void FixedUpdate()
     {
@@ -73,6 +80,7 @@ public class PlayerController : MonoBehaviour
         //quiz thing
         sprung = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsSpr);
         teleport = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsTel);
+        ceiling = Physics2D.OverlapCircle(ceiChecker.position, ceiCheckerRad, whatIsCei);
     }
     void MovePlayer()
     {
@@ -87,57 +95,66 @@ public class PlayerController : MonoBehaviour
                 transform.localScale = new Vector2(1f, 1f);
             else if (theRB2D.velocity.x < 0)
                 transform.localScale = new Vector2(-1f, 1f);
+
+            
         }
     }
 
     void Jump()
     {
+
         if (grounded == true)
         {
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
                 theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
+
+                
             }
 
-            
-        }
-
-        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
-        {
-            if (airtimeCounter > 0)
+            if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
             {
-                theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
-                airtimeCounter -= Time.deltaTime;
+                if (airtimeCounter > 0)
+                {
+                    theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
+                    airtimeCounter -= Time.deltaTime;
+                }
+
             }
 
-        }
+            if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
+            {
+                airtimeCounter = 0;
+            }
 
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
-        {
-            airtimeCounter = 0;
-        }
-
-        
 
             if (grounded)
-        {
-            airtimeCounter = airtime;
-        }
+            {
+                airtimeCounter = airtime;
+            }
 
+
+        }
         theAnimator.SetBool("Grounded", grounded);
+
     }
+
+
+
+
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if(other.gameObject.tag == "Spike")
+        if (other.gameObject.tag == "Spike")
         {
             Debug.Log("Ouch!");
             //theGM.GameOver();
+            theGM.Reset();
             theLM.TakeLife();
         }
 
     }
-
 }

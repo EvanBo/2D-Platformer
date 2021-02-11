@@ -7,6 +7,13 @@ public class MainMenu : MonoBehaviour
 {
     public string lvlToLoad;
 
+    public int dfltLives;
+
+    private void Start()
+    {
+        PlayerPrefs.SetInt("CurrentLives", dfltLives);
+    }
+
     public void PlayGame()
     {
         SceneManager.LoadScene(lvlToLoad);
