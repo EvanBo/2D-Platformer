@@ -7628,6 +7628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5.5
+  dfltSpeed: 0
   jumpForce: 11.3
   grounded: 0
   whatIsGrd:
