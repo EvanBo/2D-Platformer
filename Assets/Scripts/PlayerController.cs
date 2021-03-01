@@ -8,41 +8,22 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     private bool canMove;
     private Rigidbody2D theRB2D;
-
     public bool grounded;
     public LayerMask whatIsGrd;
     public Transform grdChecker;
     public float grdCheckerRad;
-
-    public float airtime;
-    public float airtimeCounter;
-
+    public float airTime;
+    public float airTimeCounter;
     private Animator theAnimator;
-
     public GameManager theGM;
     private LivesManager theLM;
-
-    //quiz thing
-    public bool sprung;
-    public LayerMask whatIsSpr;
-
-    public bool teleport;
-    public LayerMask whatIsTel;
-
-    public bool ceiling;
-    public LayerMask whatIsCei;
-    public Transform ceiChecker;
-    public float ceiCheckerRad;
-
     // Start is called before the first frame update
     void Start()
     {
         theLM = FindObjectOfType<LivesManager>();
-
         theRB2D = GetComponent<Rigidbody2D>();
-        airtimeCounter = airtime;
         theAnimator = GetComponent<Animator>();
-
+        airTimeCounter = airTime;
         dfltSpeed = speed;
     }
     // Update is called once per frame
@@ -52,112 +33,62 @@ public class PlayerController : MonoBehaviour
         {
             canMove = true;
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {
-            airtimeCounter = 0;
-        }
-        //quiz thing
-        if (sprung == true)
-        {
-            theRB2D.velocity = new Vector2(theRB2D.velocity.x, 50);
-
-        }
-        if (teleport == true)
-        {
-            Vector2 newpos = new Vector2(-7.5f, 3.5f);
-            theRB2D.MovePosition(newpos);
-
-        }
-        
-
-
-
     }
     private void FixedUpdate()
     {
-
         grounded = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsGrd);
         MovePlayer();
         Jump();
-        //quiz thing
-        sprung = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsSpr);
-        teleport = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsTel);
-        ceiling = Physics2D.OverlapCircle(ceiChecker.position, ceiCheckerRad, whatIsCei);
     }
     void MovePlayer()
     {
         if (canMove)
         {
             theRB2D.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed,
-           theRB2D.velocity.y);
-
+            theRB2D.velocity.y);
             theAnimator.SetFloat("Speed", Mathf.Abs(theRB2D.velocity.x));
 
             if (theRB2D.velocity.x > 0)
                 transform.localScale = new Vector2(1f, 1f);
             else if (theRB2D.velocity.x < 0)
                 transform.localScale = new Vector2(-1f, 1f);
-
-            
         }
     }
-
     void Jump()
     {
-
         if (grounded == true)
         {
-
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
                 theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
-
-                
             }
-
-            if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        }
+        if (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0))
+        {
+            if (airTimeCounter > 0)
             {
-                if (airtimeCounter > 0)
-                {
-                    theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
-                    airtimeCounter -= Time.deltaTime;
-                }
-
+                theRB2D.velocity = new Vector2(theRB2D.velocity.x, jumpForce);
+                airTimeCounter -= Time.deltaTime;
             }
-
-            if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
-            {
-                airtimeCounter = 0;
-            }
-
-
-            if (grounded)
-            {
-                airtimeCounter = airtime;
-            }
-
-
+        }
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0))
+        {
+            airTimeCounter = 0;
+        }
+        if (grounded)
+        {
+            airTimeCounter = airTime;
         }
         theAnimator.SetBool("Grounded", grounded);
-
     }
-
-
-
-
-
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.gameObject.tag == "Spike")
+        if ((other.gameObject.tag == "Spike") || (other.gameObject.tag == "Enemy"))
         {
             Debug.Log("Ouch!");
             //theGM.GameOver();
             theGM.Reset();
             theLM.TakeLife();
         }
-
     }
 }
