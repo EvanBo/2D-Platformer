@@ -33,12 +33,14 @@ public class PlayerController : MonoBehaviour
         {
             canMove = true;
         }
+
+        Jump();
     }
     private void FixedUpdate()
     {
         grounded = Physics2D.OverlapCircle(grdChecker.position, grdCheckerRad, whatIsGrd);
         MovePlayer();
-        Jump();
+        
     }
     void MovePlayer()
     {
