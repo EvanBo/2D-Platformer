@@ -4360,6 +4360,7 @@ GameObject:
   - component: {fileID: 1250323611}
   - component: {fileID: 1250323610}
   - component: {fileID: 1250323613}
+  - component: {fileID: 1250323614}
   m_Layer: 10
   m_Name: Boss
   m_TagString: Enemy
@@ -4500,6 +4501,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1250323614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250323608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09233727137c640418ea01d996f8f2f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 1487270033}
+  shotPrefab: {fileID: 6431997385503424425, guid: 84168822b0d84e04e8e6cd8e11aab3b1,
+    type: 3}
+  shotForce: 7
+  timeBetweenShots: 2
+  shotTimer: 0
 --- !u!1 &1258010902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4922,7 +4941,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487270032}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.396, z: 0}
+  m_LocalPosition: {x: 0, y: 0.265, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 167774475}
