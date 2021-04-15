@@ -2978,6 +2978,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Med_plat
       objectReference: {fileID: 0}
+    - target: {fileID: 7559704836074746535, guid: 11787e78160589b41820836fd28284ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11787e78160589b41820836fd28284ee, type: 3}
 --- !u!1 &823780927
@@ -3216,6 +3221,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Med_plat (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559704836074746535, guid: 11787e78160589b41820836fd28284ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11787e78160589b41820836fd28284ee, type: 3}
@@ -5343,7 +5353,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0053993613, y: -0.09538698}
+  m_Offset: {x: -0.00007408857, y: -0.09538698}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5354,7 +5364,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.43487695, y: 0.80922604}
+  m_Size: {x: 0.6136745, y: 0.80922604}
   m_EdgeRadius: 0
 --- !u!1 &1523421094
 GameObject:
